@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dashbtc
+  namespace: dev
 spec:
   replicas: 3 # Número de réplicas desejadas
   selector:
