@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashbtc
+spec:
+  replicas: 3 # Número de réplicas desejadas
+  selector:
+    matchLabels:
+      app: dashbtc
+  template:
+    metadata:
+      labels:
+        app: dashbtc
+    spec:
+      containers:
+      - name: dashbtc-container
+        image: jonei/dashbtc:1
+        ports:
+        - containerPort: 3000 # Porta em que seu aplicativo Node.js escuta
