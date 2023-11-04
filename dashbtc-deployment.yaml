@@ -4,7 +4,7 @@ metadata:
   name: dashbtc
   namespace: dev
 spec:
-  replicas: 3 # Número de réplicas desejadas
+  replicas: 1 # Número de réplicas desejadas
   selector:
     matchLabels:
       app: dashbtc
@@ -14,7 +14,24 @@ spec:
         app: dashbtc
     spec:
       containers:
-      - name: dashbtc-container
-        image: jonei/dashbtc:1
+      - name: dashbtc
+        image: jonei/dashbtc:1.1
         ports:
-        - containerPort: 3000 # Porta em que seu aplicativo Node.js escuta
+        - containerPort: 3000
+        imagePullPolicy: Always
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashbtc-svc
+  namespace: dev
+spec:
+  selector:
+    app: dashbtc
+  ports:
+    - name: dashbtc
+      protocol: TCP
+      port: 3000  # Porta interna do serviço
+      targetPort: 3000  # Porta que o contêiner Node.js está ouvindo
+  type: NodePort
